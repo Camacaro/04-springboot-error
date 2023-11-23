@@ -73,4 +73,18 @@ public class AppController {
         model.addAttribute("title", "Detalle usuario: ".concat(user.getName()));
         return "show";
     }
+
+    // Usando Optional de Jaba 8
+    @GetMapping("/show-op/{id}")
+    public String showOp(@PathVariable Integer id, Model model) {
+        /*
+        Otra forma de lanzar una exception sin usar el if todo directo con la
+        clase Optional de Java 8
+         */
+        User user = userService.optionalUserById(id)
+                .orElseThrow(() -> new UserNotFoundException(id.toString()));
+        model.addAttribute("user", user);
+        model.addAttribute("title", "Detalle usuario: ".concat(user.getName()));
+        return "show";
+    }
 }
